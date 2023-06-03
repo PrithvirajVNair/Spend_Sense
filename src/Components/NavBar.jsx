@@ -1,37 +1,52 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
+import { Link } from 'react-router-dom';
+import { AppBar, Toolbar, IconButton, Typography, Menu, MenuItem } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-    },
-    menuButton: {
-        marginRight: theme.spacing(2),
-    },
-}));
+const Navbar = () => {
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
-export default function Navbar() {
-    const classes = useStyles();
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
 
-    return (
-        <div className={classes.root}>
-            <AppBar position="static">
-                <Toolbar variant="dense">
-                    <IconButton edge="start"
-                        className={classes.menuButton}
-                        color="inherit" aria-label="menu">
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" color="inherit">
-                        Navbar
-                    </Typography>
-                </Toolbar>
-            </AppBar>
-        </div>
-    );
-}
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleRedirect = (event, path) => {
+    event.preventDefault();
+    try {
+      handleClose();
+      window.location.href = path;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return (
+    <AppBar position="static">
+      <Toolbar>
+        <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleClick}>
+          <MenuIcon />
+        </IconButton>
+        <Menu
+          id="simple-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={(event) => handleRedirect(event, '/')}>Login</MenuItem>
+          <MenuItem onClick={(event) => handleRedirect(event, '/signup')}>Sign Up</MenuItem>
+          <MenuItem onClick={(event) => handleRedirect(event, '/dashboard')}>Dashboard</MenuItem>
+        </Menu>
+        <Typography variant="h6" style={{fontFamily:'fantasy',fontSize:'30px'}}>
+          SpendSense
+        </Typography>
+      </Toolbar>
+    </AppBar>
+  );
+};
+
+export default Navbar;
