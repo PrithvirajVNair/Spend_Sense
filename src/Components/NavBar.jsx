@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { AppBar, Toolbar, IconButton, Typography, Menu, MenuItem } from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, Menu, MenuItem, Typography } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 
 const Navbar = () => {
@@ -41,9 +41,11 @@ const Navbar = () => {
           <MenuItem onClick={(event) => handleRedirect(event, '/signup')}>Sign Up</MenuItem>
           <MenuItem onClick={(event) => handleRedirect(event, '/dashboard')}>Dashboard</MenuItem>
         </Menu>
-        <Typography variant="h6" style={{fontFamily:'fantasy',fontSize:'30px'}}>
-          SpendSense
-        </Typography>
+        <Link to="/dashboard" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <Typography variant="h6" style={{ fontFamily: 'fantasy', fontSize: '30px' }}>
+            SpendSense
+          </Typography>
+        </Link>
       </Toolbar>
     </AppBar>
   );
